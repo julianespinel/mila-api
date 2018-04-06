@@ -1,18 +1,23 @@
-package main
+package bvc
 
 import (
-	"log"
-	"net/http"
-	"time"
-	"crypto/tls"
-	"os"
-	"io"
-	"github.com/extrame/xls"
-	"../models"
-	"strconv"
 	"fmt"
+	"time"
+	"io"
+	"os"
+	"log"
+	"github.com/extrame/xls"
+	"strconv"
 	"github.com/shopspring/decimal"
+	"net/http"
+	"crypto/tls"
+
+	"../models"
 )
+
+type BVCClient struct {
+	err error
+}
 
 const RESULTS = 100
 const VARIABLE_INCOME = 1
@@ -72,14 +77,14 @@ func getStockFromRow(row *xls.Row) models.Stock {
 func getStocksFromFile(filePath string) []models.Stock {
 	stocks := make([]models.Stock, 0)
 	xlFile, err := xls.Open(filePath, "utf-8")
-	if err == nil {
-		if sheet := xlFile.GetSheet(0); sheet != nil {
-			log.Println("Total Lines ", sheet.MaxRow, sheet.Name)
-			for i := 2; i <= int(sheet.MaxRow); i++ {
-				row := sheet.Row(i)
-				stock := getStockFromRow(row)
-				stocks = append(stocks, stock)
-			}
+	if err != nil {
+		log.Fatal(err)
+	}
+	if sheet := xlFile.GetSheet(0); sheet != nil {
+		for i := 2; i <= int(sheet.MaxRow); i++ {
+			row := sheet.Row(i)
+			stock := getStockFromRow(row)
+			stocks = append(stocks, stock)
 		}
 	}
 	return stocks
@@ -92,11 +97,11 @@ func deleteFile(filePath string) {
 	}
 }
 
-func getStocksClosingDataByDate(date time.Time) []models.Stock {
-	// dateStr := date.Format("2006-01-02")
+func (bvcClient BVCClient) GetStocksClosingDataByDate(date time.Time) []models.Stock {
+	dateStr := date.Format("2006-01-02")
 	url := fmt.Sprintf(
 		"https://www.bvc.com.co/mercados/DescargaXlsServlet?archivo=acciones&fecha=%s&resultados=%v&tipoMercado=%v",
-		/*dateStr,*/ "2018-03-28",
+		/*dateStr,*/ dateStr,
 		RESULTS,
 		VARIABLE_INCOME,
 	)
@@ -113,14 +118,4 @@ func getStocksClosingDataByDate(date time.Time) []models.Stock {
 	stocks := getStocksFromFile(filePath)
 	deleteFile(filePath)
 	return stocks
-}
-
-func main() {
-	date := time.Now()
-	stocks := getStocksClosingDataByDate(date)
-	log.Println("***************** 1")
-	for _, stock := range stocks {
-		log.Println(stock.Name)
-	}
-	log.Println("***************** 2")
 }
