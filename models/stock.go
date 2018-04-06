@@ -3,11 +3,13 @@ package models
 import (
 	"time"
 	"github.com/shopspring/decimal"
+	"github.com/jinzhu/gorm"
 )
 
 type Stock struct {
+	gorm.Model
 	Date time.Time
-	Symbol string
+	Symbol string `gorm:"PRIMARY_KEY"`
 	Name string
 	Currency string
 	Open decimal.Decimal
