@@ -3,14 +3,15 @@ package main
 import (
 	"github.com/jasonlvhit/gocron"
 	"github.com/jinzhu/gorm"
-	"./bvc"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"log"
+	"time"
 )
 
-func initializeBVC(db *gorm.DB) bvc.BVCDomain {
-	client := bvc.BVCClient{}
-	persistence := bvc.BVCPersistence{db: db}
-	bvc := bvc.BVCDomain{
+func initializeBVC(db *gorm.DB) BVCDomain {
+	client := BVCClient{}
+	persistence := BVCPersistence{db: db}
+	bvc := BVCDomain{
 		client: client,
 		persistence: persistence,
 	}
@@ -18,7 +19,8 @@ func initializeBVC(db *gorm.DB) bvc.BVCDomain {
 }
 
 func main() {
-	db, err := gorm.Open("sqlite3", "test.db")
+	time.Sleep(15* time.Second)
+	db, err := gorm.Open("mysql", "usertest:passwordtest@tcp(db:3306)/miladb?charset=utf8&parseTime=True")
 	if err != nil {
 		log.Fatal(err)
 	}
