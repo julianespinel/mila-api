@@ -1,4 +1,4 @@
-package bvc
+package main
 
 import (
 	"fmt"
@@ -11,17 +11,17 @@ import (
 	"github.com/shopspring/decimal"
 	"net/http"
 	"crypto/tls"
-
-	"../models"
 )
 
 type BVCClient struct {
 	err error
 }
 
-const RESULTS = 100
-const VARIABLE_INCOME = 1
-const COP = "COP"
+const (
+	results        = 100
+	variableIncome = 1
+	cop            = "cop"
+)
 
 /*
  * TODO: improve error handling.
@@ -47,8 +47,8 @@ func saveBodyToFile(body io.ReadCloser) string {
 	return filePath
 }
 
-func getStockFromRow(row *xls.Row) models.Stock {
-	stock := models.Stock{}
+func getStockFromRow(row *xls.Row) Stock {
+	stock := Stock{}
 	for j := row.FirstCol(); j <= row.LastCol(); j++ {
 		cell := row.Col(j)
 		log.Println(cell)
@@ -70,12 +70,12 @@ func getStockFromRow(row *xls.Row) models.Stock {
 			stock.Close = closePrice
 		}
 	}
-	stock.Currency = COP
+	stock.Currency = cop
 	return stock
 }
 
-func getStocksFromFile(filePath string) []models.Stock {
-	stocks := make([]models.Stock, 0)
+func getStocksFromFile(filePath string) []Stock {
+	stocks := make([]Stock, 0)
 	xlFile, err := xls.Open(filePath, "utf-8")
 	if err != nil {
 		log.Fatal(err)
@@ -97,13 +97,13 @@ func deleteFile(filePath string) {
 	}
 }
 
-func (bvcClient BVCClient) GetStocksClosingDataByDate(date time.Time) []models.Stock {
+func (bvcClient BVCClient) GetStocksClosingDataByDate(date time.Time) []Stock {
 	dateStr := date.Format("2006-01-02")
 	url := fmt.Sprintf(
 		"https://www.bvc.com.co/mercados/DescargaXlsServlet?archivo=acciones&fecha=%s&resultados=%v&tipoMercado=%v",
 		/*dateStr,*/ dateStr,
-		RESULTS,
-		VARIABLE_INCOME,
+		results,
+		variableIncome,
 	)
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify : true},

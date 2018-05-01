@@ -1,4 +1,4 @@
-package bvc
+package main
 
 import "time"
 
