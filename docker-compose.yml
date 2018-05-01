@@ -1,0 +1,21 @@
+version: '3.1'
+services:
+  db:
+    image: mysql:5
+    restart: always
+    environment:
+      MYSQL_USER: usertest
+      MYSQL_PASSWORD: passwordtest
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: miladb
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    links:
+      - db
