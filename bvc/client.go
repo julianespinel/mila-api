@@ -1,4 +1,4 @@
-package main
+package bvc
 
 import (
 	"fmt"
@@ -11,9 +11,10 @@ import (
 	"github.com/shopspring/decimal"
 	"net/http"
 	"crypto/tls"
+	"github.com/julianespinel/mila-api/models"
 )
 
-type BVCClient struct {
+type Client struct {
 	err error
 }
 
@@ -47,8 +48,8 @@ func saveBodyToFile(body io.ReadCloser) string {
 	return filePath
 }
 
-func getStockFromRow(row *xls.Row) Stock {
-	stock := Stock{}
+func getStockFromRow(row *xls.Row) models.Stock {
+	stock := models.Stock{}
 	for j := row.FirstCol(); j <= row.LastCol(); j++ {
 		cell := row.Col(j)
 		log.Println(cell)
@@ -74,8 +75,8 @@ func getStockFromRow(row *xls.Row) Stock {
 	return stock
 }
 
-func getStocksFromFile(filePath string) []Stock {
-	stocks := make([]Stock, 0)
+func getStocksFromFile(filePath string) []models.Stock {
+	stocks := make([]models.Stock, 0)
 	xlFile, err := xls.Open(filePath, "utf-8")
 	if err != nil {
 		log.Fatal(err)
@@ -97,7 +98,7 @@ func deleteFile(filePath string) {
 	}
 }
 
-func (bvcClient BVCClient) GetStocksClosingDataByDate(date time.Time) []Stock {
+func (bvcClient Client) GetStocksClosingDataByDate(date time.Time) []models.Stock {
 	dateStr := date.Format("2006-01-02")
 	url := fmt.Sprintf(
 		"https://www.bvc.com.co/mercados/DescargaXlsServlet?archivo=acciones&fecha=%s&resultados=%v&tipoMercado=%v",

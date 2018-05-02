@@ -6,16 +6,14 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"log"
 	"time"
+	"github.com/julianespinel/mila-api/bvc"
 )
 
-func initializeBVC(db *gorm.DB) BVCDomain {
-	client := BVCClient{}
-	persistence := BVCPersistence{db: db}
-	bvc := BVCDomain{
-		client: client,
-		persistence: persistence,
-	}
-	return bvc
+func initializeBVC(db *gorm.DB) bvc.Domain {
+	client := bvc.Client{}
+	persistence := bvc.InitPersistence(db)
+	domain := bvc.InitDomain(client, persistence)
+	return domain
 }
 
 func main() {
