@@ -112,10 +112,10 @@ func (bvcClient Client) GetStocksClosingDataByDate(date time.Time) []models.Stoc
 	}
 	client := &http.Client{Transport: tr}
 	res, err := client.Get(url)
-	defer res.Body.Close()
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer res.Body.Close()
 	filePath := saveBodyToFile(res.Body)
 	stocks := getStocksFromFile(filePath)
 	deleteFile(filePath)
