@@ -9,7 +9,7 @@ type Domain struct {
 
 func InitDomain(client Client, persistence Persistence) Domain {
 	domain := Domain{
-		client: client,
+		client:      client,
 		persistence: persistence,
 	}
 	return domain
