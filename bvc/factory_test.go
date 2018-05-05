@@ -1,10 +1,12 @@
 package bvc
 
 import (
-	"github.com/Pallinder/go-randomdata"
-	"github.com/shopspring/decimal"
+	"fmt"
 	"time"
+
+	"github.com/Pallinder/go-randomdata"
 	"github.com/julianespinel/mila-api/models"
+	"github.com/shopspring/decimal"
 )
 
 func getRandomString() string {

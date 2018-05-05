@@ -2,10 +2,11 @@ package bvc
 
 import (
 	"testing"
+
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
-	"github.com/stretchr/testify/assert"
 	"github.com/julianespinel/mila-api/models"
+	"github.com/stretchr/testify/assert"
 )
 
 func getDatabaseConnection(t *testing.T) *gorm.DB {
