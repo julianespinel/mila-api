@@ -1,17 +1,18 @@
 package bvc
 
 import (
-	"fmt"
-	"time"
-	"io"
-	"os"
-	"log"
-	"github.com/extrame/xls"
-	"strconv"
-	"github.com/shopspring/decimal"
-	"net/http"
 	"crypto/tls"
+	"fmt"
+	"io"
+	"log"
+	"net/http"
+	"os"
+	"strconv"
+	"time"
+
+	"github.com/extrame/xls"
 	"github.com/julianespinel/mila-api/models"
+	"github.com/shopspring/decimal"
 )
 
 type Client struct {
@@ -107,7 +108,7 @@ func (bvcClient Client) GetStocksClosingDataByDate(date time.Time) []models.Stoc
 		variableIncome,
 	)
 	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify : true},
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
 	client := &http.Client{Transport: tr}
 	res, err := client.Get(url)
