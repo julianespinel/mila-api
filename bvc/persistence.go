@@ -26,3 +26,9 @@ func (persistence Persistence) SaveStocks(stocks []models.Stock) error {
 	tx.Commit()
 	return nil
 }
+
+func (persistence Persistence) CountStocks() int {
+	count := 0
+	persistence.db.Model(&models.Stock{}).Count(&count)
+	return count
+}
