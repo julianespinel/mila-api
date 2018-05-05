@@ -1,7 +1,6 @@
 package bvc
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/Pallinder/go-randomdata"
@@ -43,7 +42,7 @@ func GetTestingStocks(size int) []models.Stock {
 	stocks := make([]models.Stock, size)
 	for i := 0; i < size; i++ {
 		stock := GetRandomStock()
-		stocks = append(stocks, stock)
+		stocks[i] = stock
 	}
 	return stocks
 }
