@@ -15,15 +15,27 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/dnaeon/go-vcr"
+  packages = [
+    "cassette",
+    "recorder"
+  ]
+  revision = "f8a7e8b9c630b486df74145bb887793a1b85459b"
+
+[[projects]]
+  branch = "master"
   name = "github.com/extrame/ole2"
   packages = ["."]
   revision = "d69429661ad7efb189d2ad8074c867265009d0a4"
 
 [[projects]]
+  branch = "new_formatter"
   name = "github.com/extrame/xls"
-  packages = ["."]
-  revision = "f02a04cbdd7aa643a55358e986ab58959ce2cc11"
-  version = "v0.0.1"
+  packages = [
+    ".",
+    "format"
+  ]
+  revision = "ed8580ddea285dbf8183edf5a17b678c57004cf0"
 
 [[projects]]
   name = "github.com/go-sql-driver/mysql"
@@ -77,9 +89,15 @@
   revision = "12b6f73e6084dad08a7c6e575284b177ecafbc71"
   version = "v1.2.1"
 
+[[projects]]
+  name = "gopkg.in/yaml.v2"
+  packages = ["."]
+  revision = "5420a8b6744d3b0345ab293f6fcba19c978f1183"
+  version = "v2.2.1"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "89e476dcf9fc71feeafdfaa87fe005bdb124d1a53e07cf228ab3ce690c2b2c6c"
+  inputs-digest = "6c4512ff3857ff1934faeccaa8ebba3010e382abcb6d128d3d79a8850afa3e2a"
   solver-name = "gps-cdcl"
   solver-version = 1
