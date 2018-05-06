@@ -19,7 +19,7 @@ func dropStocksTable(db *gorm.DB) {
 	db.DropTable(&models.Stock{})
 }
 
-func TestBVCPersistence_SaveStocks_success(t *testing.T) {
+func Test_BVCPersistence_SaveStocks_success(t *testing.T) {
 	// Setup
 	db := getDatabaseConnection(t)
 	size := 5
