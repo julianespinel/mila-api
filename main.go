@@ -1,7 +1,9 @@
 package main
 
 import (
+	"crypto/tls"
 	"log"
+	"net/http"
 	"time"
 
 	"github.com/jasonlvhit/gocron"
@@ -11,7 +13,11 @@ import (
 )
 
 func initializeBVC(db *gorm.DB) bvc.Domain {
-	client := bvc.Client{}
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+	httpClient := &http.Client{Transport: tr}
+	client := bvc.InitClient(httpClient)
 	persistence := bvc.InitPersistence(db)
 	domain := bvc.InitDomain(client, persistence)
 	return domain
