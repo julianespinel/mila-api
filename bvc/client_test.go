@@ -11,20 +11,26 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_BVCClient_GetStocksClosingDataByDate_success(t *testing.T) {
+func getVCRRecorder(cassetteName string) *recorder.Recorder {
 	transport := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
-	recording, err := recorder.NewAsMode(
-		"fixtures/Test_BVCClient_GetStocksClosingDataByDate_success",
+	rec, err := recorder.NewAsMode(
+		cassetteName,
 		recorder.ModeReplaying,
 		transport,
 	)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer recording.Stop()
-	httpClient := &http.Client{Transport: recording}
+	return rec
+}
+
+func Test_BVCClient_GetStocksClosingDataByDate_success(t *testing.T) {
+	cassetteName := "fixtures/Test_BVCClient_GetStocksClosingDataByDate_success"
+	rec := getVCRRecorder(cassetteName)
+	defer rec.Stop()
+	httpClient := &http.Client{Transport: rec}
 	bvcClient := InitClient(httpClient)
 	date := time.Date(2018, time.April, 30, 0, 0, 0, 0, time.UTC)
 
