@@ -1,7 +1,6 @@
 package bvc
 
 import (
-	"crypto/tls"
 	"fmt"
 	"io"
 	"log"
@@ -16,7 +15,8 @@ import (
 )
 
 type Client struct {
-	err error
+	err        error
+	httpClient *http.Client
 }
 
 const (
@@ -29,6 +29,10 @@ const (
  * TODO: improve error handling.
  * See: https://blog.golang.org/errors-are-values
  */
+
+func InitClient(client *http.Client) Client {
+	return Client{httpClient: client}
+}
 
 func getTemporalFileName() string {
 	fileName := "bvc-stocks-%v.xls"
@@ -100,18 +104,14 @@ func deleteFile(filePath string) {
 }
 
 func (bvcClient Client) GetStocksClosingDataByDate(date time.Time) []models.Stock {
-	dateStr := date.Format("2006-01-02")
 	url := fmt.Sprintf(
 		"https://www.bvc.com.co/mercados/DescargaXlsServlet?archivo=acciones&fecha=%s&resultados=%v&tipoMercado=%v",
-		/*dateStr,*/ dateStr,
+		date.Format("2006-01-02"),
 		results,
 		variableIncome,
 	)
-	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-	}
-	client := &http.Client{Transport: tr}
-	res, err := client.Get(url)
+	log.Println("performing request: ", url)
+	res, err := bvcClient.httpClient.Get(url)
 	if err != nil {
 		log.Fatal(err)
 	}
