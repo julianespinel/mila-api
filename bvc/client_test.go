@@ -15,7 +15,11 @@ func Test_BVCClient_GetStocksClosingDataByDate_success(t *testing.T) {
 	transport := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
-	recording, err := recorder.NewAsMode("fixtures/bvc", recorder.ModeReplaying, transport)
+	recording, err := recorder.NewAsMode(
+		"fixtures/Test_BVCClient_GetStocksClosingDataByDate_success",
+		recorder.ModeReplaying,
+		transport,
+	)
 	if err != nil {
 		log.Fatal(err)
 	}
