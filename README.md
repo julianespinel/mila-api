@@ -1,5 +1,8 @@
 # mila-api
-An API to provide MILA (Mercado Integrado Latinoamericano) stock data
+
+An API to provide MILA (Mercado Integrado Latinoamericano) stock data.
+
+Status: [![CircleCI](https://circleci.com/gh/julianespinel/mila-api.svg?style=svg&circle-token=65f92f8bd064930b35681d97f699bf2707f10d3e)](https://circleci.com/gh/julianespinel/mila-api)
 
 ## Testing
 
