@@ -3,11 +3,11 @@ package bvc
 import "time"
 
 type Domain struct {
-	client      Client
-	persistence Persistence
+	client      ClientInterface
+	persistence PersistenceInterface
 }
 
-func InitDomain(client Client, persistence Persistence) Domain {
+func InitDomain(client ClientInterface, persistence PersistenceInterface) Domain {
 	domain := Domain{
 		client:      client,
 		persistence: persistence,
