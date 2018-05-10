@@ -30,7 +30,7 @@ func main() {
 		log.Fatal(err)
 	}
 	bvcApi := initializeBVC(db)
-	gocron.Every(1).Day().At("23:59").Do(bvcApi.UpdateDailyStocks, time.Now())
+	gocron.Every(1).Day().At("23:00").Do(bvcApi.UpdateDailyStocks, time.Now())
 
 	// Start all the pending jobs
 	<-gocron.Start()
