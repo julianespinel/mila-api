@@ -14,6 +14,10 @@ import (
 	"github.com/shopspring/decimal"
 )
 
+type ClientInterface interface {
+	GetStocksClosingDataByDate(date time.Time) []models.Stock
+}
+
 type Client struct {
 	err        error
 	httpClient *http.Client
@@ -30,7 +34,7 @@ const (
  * See: https://blog.golang.org/errors-are-values
  */
 
-func InitClient(client *http.Client) Client {
+func InitClient(client *http.Client) ClientInterface {
 	return Client{httpClient: client}
 }
 
