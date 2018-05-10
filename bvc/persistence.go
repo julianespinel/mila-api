@@ -5,11 +5,16 @@ import (
 	"github.com/julianespinel/mila-api/models"
 )
 
+type PersistenceInterface interface {
+	CountStocks() int
+	SaveStocks(stocks []models.Stock) error
+}
+
 type Persistence struct {
 	db *gorm.DB
 }
 
-func InitPersistence(db *gorm.DB) Persistence {
+func InitPersistence(db *gorm.DB) PersistenceInterface {
 	return Persistence{db: db}
 }
 
