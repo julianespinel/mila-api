@@ -15,7 +15,7 @@ func InitDomain(client ClientInterface, persistence PersistenceInterface) Domain
 	return domain
 }
 
-func (domain Domain) UpdateDailyStocks() error {
-	stocks := domain.client.GetStocksClosingDataByDate(time.Now())
+func (domain Domain) UpdateDailyStocks(date time.Time) error {
+	stocks := domain.client.GetStocksClosingDataByDate(date)
 	return domain.persistence.SaveStocks(stocks)
 }
