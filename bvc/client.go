@@ -57,7 +57,6 @@ func getStockFromRow(row *xls.Row) models.Stock {
 	stock := models.Stock{}
 	for j := row.FirstCol(); j <= row.LastCol(); j++ {
 		cell := row.Col(j)
-		log.Println(cell)
 		if j == 1 {
 			volume, err := strconv.ParseInt(cell, 10, 64)
 			if err != nil {
@@ -87,7 +86,8 @@ func getStocksFromFile(filePath string) []models.Stock {
 		log.Fatal(err)
 	}
 	if sheet := xlFile.GetSheet(0); sheet != nil {
-		for i := 2; i <= int(sheet.MaxRow); i++ {
+		firstRow := 2 // Why? File first row is blank, second row is the table header.
+		for i := firstRow; i <= int(sheet.MaxRow); i++ {
 			row := sheet.Row(i)
 			stock := getStockFromRow(row)
 			stocks = append(stocks, stock)
