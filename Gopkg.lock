@@ -3,21 +3,51 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/Pallinder/go-randomdata"
+  packages = ["."]
+  revision = "dab270d296c6c8fb98de3b4334bbd7d7b0ceca53"
+
+[[projects]]
+  name = "github.com/davecgh/go-spew"
+  packages = ["spew"]
+  revision = "346938d642f2ec3594ed81d874461961cd0faa76"
+  version = "v1.1.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/dnaeon/go-vcr"
+  packages = [
+    "cassette",
+    "recorder"
+  ]
+  revision = "f8a7e8b9c630b486df74145bb887793a1b85459b"
+
+[[projects]]
+  branch = "master"
   name = "github.com/extrame/ole2"
   packages = ["."]
   revision = "d69429661ad7efb189d2ad8074c867265009d0a4"
 
 [[projects]]
+  branch = "new_formatter"
   name = "github.com/extrame/xls"
-  packages = ["."]
-  revision = "f02a04cbdd7aa643a55358e986ab58959ce2cc11"
-  version = "v0.0.1"
+  packages = [
+    ".",
+    "format"
+  ]
+  revision = "ed8580ddea285dbf8183edf5a17b678c57004cf0"
 
 [[projects]]
   name = "github.com/go-sql-driver/mysql"
   packages = ["."]
   revision = "a0583e0143b1624142adab07e0e97fe106d99561"
   version = "v1.3"
+
+[[projects]]
+  name = "github.com/golang/mock"
+  packages = ["gomock"]
+  revision = "c34cdb4725f4c3844d095133c6e40e448b86589b"
+  version = "v1.1.1"
 
 [[projects]]
   branch = "master"
@@ -29,7 +59,8 @@
   name = "github.com/jinzhu/gorm"
   packages = [
     ".",
-    "dialects/mysql"
+    "dialects/mysql",
+    "dialects/sqlite"
   ]
   revision = "6ed508ec6a4ecb3531899a69cbc746ccf65a4166"
   version = "v1.9.1"
@@ -41,14 +72,44 @@
   revision = "04140366298a54a039076d798123ffa108fff46c"
 
 [[projects]]
+  name = "github.com/mattn/go-sqlite3"
+  packages = ["."]
+  revision = "6c771bb9887719704b210e87e934f08be014bdb1"
+  version = "v1.6.0"
+
+[[projects]]
+  name = "github.com/pmezard/go-difflib"
+  packages = ["difflib"]
+  revision = "792786c7400a136282c1664665ae0a8db921c6c2"
+  version = "v1.0.0"
+
+[[projects]]
   name = "github.com/shopspring/decimal"
   packages = ["."]
   revision = "69b3a8ad1f5f2c8bd855cb6506d18593064a346b"
   version = "1.0.1"
 
+[[projects]]
+  name = "github.com/stretchr/testify"
+  packages = ["assert"]
+  revision = "12b6f73e6084dad08a7c6e575284b177ecafbc71"
+  version = "v1.2.1"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/net"
+  packages = ["context"]
+  revision = "f73e4c9ed3b7ebdd5f699a16a880c2b1994e50dd"
+
+[[projects]]
+  name = "gopkg.in/yaml.v2"
+  packages = ["."]
+  revision = "5420a8b6744d3b0345ab293f6fcba19c978f1183"
+  version = "v2.2.1"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "b69aff176d9912c494ade2e36bd92e884b7f8699c597d3ba2047998143f779a9"
+  inputs-digest = "bc9fcf3e720c56e29f3ca1b16fa096e4f6b3301917cf2cc072f632e80dd6647f"
   solver-name = "gps-cdcl"
   solver-version = 1

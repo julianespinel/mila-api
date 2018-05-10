@@ -2,46 +2,23 @@
 
 [![GoDoc](https://godoc.org/github.com/extrame/xls?status.svg)](https://godoc.org/github.com/extrame/xls)
 
-Pure Golang xls library writen by [MinkTech(chinese)](http://www.mink-tech.com). 
+Pure Golang xls library writen by [Rongshu Tech(chinese)](http://www.rongshu.tech). 
 
-Thanks for contributions from Tamás Gulácsi. 
+Thanks for contributions from Tamás Gulácsi, sergeilem.
 
-**English User please mailto** [Liu Ming](mailto:liuming@mink-tech.com)
+**English User please mailto** [Liu Ming](mailto:liuming@rongshu.tech)
 
 This is a xls library writen in pure Golang. Almostly it is translated from the libxls library in c.
 
-It has just the reading function without the format.
+The master brunch has just the reading function without the format. 
+
+***new_formater** branch is for better format for date and number ,but just under test, you can try it in development environment. If you have some problem about the output format, tell me the problem, I will try to fix it.*
 
 # Basic Usage
 
 * Use **Open** function for open file
-* Use **OpenReader** function for open xls from a reader
+* Use **OpenWithCloser** function for open file and use the return value closer for close file
+* Use **OpenReader** function for open xls from a reader, you should close related file in your own code
 
-These methods will open a workbook object for reading, like
-
-	func (w *WorkBook) ReadAllCells() (res [][]string) {
-		for _, sheet := range w.Sheets {
-			w.PrepareSheet(sheet)
-			if sheet.MaxRow != 0 {
-				temp := make([][]string, sheet.MaxRow+1)
-				for k, row := range sheet.Rows {
-					data := make([]string, 0)
-					if len(row.Cols) > 0 {
-						for _, col := range row.Cols {
-							if uint16(len(data)) <= col.LastCol() {
-								data = append(data, make([]string, col.LastCol()-uint16(len(data))+1)...)
-							}
-							str := col.String(w)
-							for i := uint16(0); i < col.LastCol()-col.FirstCol()+1; i++ {
-								data[col.FirstCol()+i] = str[i]
-							}
-						}
-						temp[k] = data
-					}
-				}
-				res = append(res, temp...)
-			}
-		}
-		return
-	}
+* Follow the example in GODOC
 
