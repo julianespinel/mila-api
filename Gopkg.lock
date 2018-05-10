@@ -44,6 +44,12 @@
   version = "v1.3"
 
 [[projects]]
+  name = "github.com/golang/mock"
+  packages = ["gomock"]
+  revision = "c34cdb4725f4c3844d095133c6e40e448b86589b"
+  version = "v1.1.1"
+
+[[projects]]
   branch = "master"
   name = "github.com/jasonlvhit/gocron"
   packages = ["."]
@@ -90,6 +96,12 @@
   version = "v1.2.1"
 
 [[projects]]
+  branch = "master"
+  name = "golang.org/x/net"
+  packages = ["context"]
+  revision = "f73e4c9ed3b7ebdd5f699a16a880c2b1994e50dd"
+
+[[projects]]
   name = "gopkg.in/yaml.v2"
   packages = ["."]
   revision = "5420a8b6744d3b0345ab293f6fcba19c978f1183"
@@ -98,6 +110,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6c4512ff3857ff1934faeccaa8ebba3010e382abcb6d128d3d79a8850afa3e2a"
+  inputs-digest = "bc9fcf3e720c56e29f3ca1b16fa096e4f6b3301917cf2cc072f632e80dd6647f"
   solver-name = "gps-cdcl"
   solver-version = 1
