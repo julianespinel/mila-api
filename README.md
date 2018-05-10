@@ -3,4 +3,6 @@ An API to provide MILA (Mercado Integrado Latinoamericano) stock data
 
 ## Testing
 
-`go test ./...`
+Run the tests: `go test ./...`
+
+Create new mocks: `mockgen -source=file_name.go -destination=mock_file_name.go`
