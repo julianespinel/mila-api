@@ -10,11 +10,11 @@ import (
 )
 
 func initializeBVCDomain(t *testing.T) (DomainMila, *MockClientInterface,
-	*MockPersistenceInterface) {
+	*MockPersistenceMila) {
 	mockController := gomock.NewController(t)
 	defer mockController.Finish()
 	clientMock := NewMockClientInterface(mockController)
-	persistenceMock := NewMockPersistenceInterface(mockController)
+	persistenceMock := NewMockPersistenceMila(mockController)
 	domain := InitDomain(clientMock, persistenceMock)
 	return domain, clientMock, persistenceMock
 }

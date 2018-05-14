@@ -13,10 +13,10 @@ type DomainMila interface {
 
 type Domain struct {
 	client      ClientInterface
-	persistence PersistenceInterface
+	persistence PersistenceMila
 }
 
-func InitDomain(client ClientInterface, persistence PersistenceInterface) DomainMila {
+func InitDomain(client ClientInterface, persistence PersistenceMila) DomainMila {
 	domain := Domain{
 		client:      client,
 		persistence: persistence,

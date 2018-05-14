@@ -7,7 +7,7 @@ import (
 
 // TODO: rename to PersistenceMila
 // TODO: generate mock specifying package name
-type PersistenceInterface interface {
+type PersistenceMila interface {
 	countStocks() int
 	saveStocks(stocks []models.Stock) error
 	getCurrentDayStocks(country string) []models.Stock
@@ -17,7 +17,7 @@ type Persistence struct {
 	db *gorm.DB
 }
 
-func InitPersistence(db *gorm.DB) PersistenceInterface {
+func InitPersistence(db *gorm.DB) PersistenceMila {
 	return Persistence{db: db}
 }
 
