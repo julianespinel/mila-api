@@ -5,11 +5,10 @@
 package bvc
 
 import (
-	reflect "reflect"
-	time "time"
-
 	gomock "github.com/golang/mock/gomock"
 	models "github.com/julianespinel/mila-api/models"
+	reflect "reflect"
+	time "time"
 )
 
 // MockDomainMila is a mock of DomainMila interface
