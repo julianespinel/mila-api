@@ -14,8 +14,10 @@ import (
 	"github.com/shopspring/decimal"
 )
 
+// TODO: rename to ClientMila
+// TODO: generate mock specifying package name
 type ClientInterface interface {
-	GetStocksClosingDataByDate(date time.Time) []models.Stock
+	getStocksClosingDataByDate(date time.Time) []models.Stock
 }
 
 type Client struct {
@@ -107,7 +109,7 @@ func deleteFile(filePath string) {
 	}
 }
 
-func (bvcClient Client) GetStocksClosingDataByDate(date time.Time) []models.Stock {
+func (bvcClient Client) getStocksClosingDataByDate(date time.Time) []models.Stock {
 	url := fmt.Sprintf(
 		"https://www.bvc.com.co/mercados/DescargaXlsServlet?archivo=acciones&fecha=%s&resultados=%v&tipoMercado=%v",
 		date.Format("2006-01-02"),

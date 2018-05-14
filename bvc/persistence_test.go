@@ -19,19 +19,19 @@ func dropStocksTable(db *gorm.DB) {
 	db.DropTable(&models.Stock{})
 }
 
-func Test_BVCPersistence_SaveStocks_success(t *testing.T) {
+func Test_BVCPersistence_saveStocks_success(t *testing.T) {
 	// Setup
 	db := getDatabaseConnection(t)
 	size := 5
-	stocks := GetTestingStocks(size)
+	stocks := GetTestingStocks(size, models.Colombia)
 	assert.Equal(t, size, len(stocks))
 	// Exercise
 	bvcPersistence := Persistence{db: db}
-	err := bvcPersistence.SaveStocks(stocks)
+	err := bvcPersistence.saveStocks(stocks)
 	assert.Nil(t, err)
-	assert.Equal(t, size, bvcPersistence.CountStocks())
+	assert.Equal(t, size, bvcPersistence.countStocks())
 	// Tear down
 	dropStocksTable(db)
-	assert.Equal(t, 0, bvcPersistence.CountStocks())
+	assert.Equal(t, 0, bvcPersistence.countStocks())
 	db.Close()
 }
