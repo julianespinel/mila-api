@@ -5,8 +5,6 @@ import (
 	"github.com/julianespinel/mila-api/models"
 )
 
-// TODO: rename to PersistenceMila
-// TODO: generate mock specifying package name
 type PersistenceMila interface {
 	countStocks() int
 	saveStocks(stocks []models.Stock) error
