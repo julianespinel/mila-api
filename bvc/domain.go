@@ -25,7 +25,10 @@ func InitDomain(client MilaClient, persistence MilaPersistence) MilaDomain {
 }
 
 func (domain Domain) updateDailyStocks(date time.Time) error {
-	stocks := domain.client.getStocksClosingDataByDate(date)
+	stocks, err := domain.client.getStocksClosingDataByDate(date)
+	if err != nil {
+		return err
+	}
 	return domain.persistence.saveStocks(stocks)
 }
 

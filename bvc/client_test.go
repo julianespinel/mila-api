@@ -34,7 +34,8 @@ func Test_BVCClient_getStocksClosingDataByDate_success(t *testing.T) {
 	bvcClient := InitClient(httpClient)
 	date := time.Date(2018, time.April, 30, 0, 0, 0, 0, time.UTC)
 
-	stocks := bvcClient.getStocksClosingDataByDate(date)
+	stocks, err := bvcClient.getStocksClosingDataByDate(date)
+	assert.Nil(t, err)
 	assert.NotNil(t, stocks)
 	assert.NotZero(t, len(stocks))
 }

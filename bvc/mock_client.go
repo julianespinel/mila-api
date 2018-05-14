@@ -35,10 +35,11 @@ func (m *MockMilaClient) EXPECT() *MockMilaClientMockRecorder {
 }
 
 // getStocksClosingDataByDate mocks base method
-func (m *MockMilaClient) getStocksClosingDataByDate(date time.Time) []models.Stock {
+func (m *MockMilaClient) getStocksClosingDataByDate(date time.Time) ([]models.Stock, error) {
 	ret := m.ctrl.Call(m, "getStocksClosingDataByDate", date)
 	ret0, _ := ret[0].([]models.Stock)
-	return ret0
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // getStocksClosingDataByDate indicates an expected call of getStocksClosingDataByDate

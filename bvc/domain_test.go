@@ -26,7 +26,7 @@ func Test_BVCDomain_updateDailyStocks_success(t *testing.T) {
 	stocks := GetTestingStocks(size, models.Colombia)
 	date := time.Date(2018, time.April, 30, 0, 0, 0, 0, time.UTC)
 
-	clientMock.EXPECT().getStocksClosingDataByDate(date).Return(stocks)
+	clientMock.EXPECT().getStocksClosingDataByDate(date).Return(stocks, nil)
 	persistenceMock.EXPECT().saveStocks(stocks).Return(nil)
 
 	err := domain.updateDailyStocks(date)
