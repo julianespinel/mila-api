@@ -19,3 +19,7 @@ func (domain Domain) updateDailyStocks(date time.Time) error {
 	stocks := domain.client.getStocksClosingDataByDate(date)
 	return domain.persistence.saveStocks(stocks)
 }
+
+func (domain Domain) getCurrentDayStocks(country string) []models.Stock {
+	return domain.persistence.getCurrentDayStocks(country)
+}

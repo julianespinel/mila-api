@@ -40,3 +40,9 @@ func (persistence Persistence) countStocks() int {
 	persistence.db.Model(&models.Stock{}).Count(&count)
 	return count
 }
+
+func (persistence Persistence) getCurrentDayStocks(country string) []models.Stock {
+	var stocks []models.Stock
+	persistence.db.Where(&models.Stock{Country: country}).Find(&stocks)
+	return stocks
+}
