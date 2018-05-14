@@ -21,10 +21,11 @@ func getRandomInt(initial int, final int) int64 {
 	return int64(randomdata.Number(initial, final))
 }
 
-func GetRandomStock() models.Stock {
+func GetRandomStock(country string) models.Stock {
 	closePrice := getRandomDecimal(2, 6)
 	stock := models.Stock{
 		Date:     time.Now(),
+		Country:  country,
 		Symbol:   getRandomString(),
 		Name:     getRandomString(),
 		Currency: getRandomString(),
@@ -38,10 +39,10 @@ func GetRandomStock() models.Stock {
 	return stock
 }
 
-func GetTestingStocks(size int) []models.Stock {
+func GetTestingStocks(size int, country string) []models.Stock {
 	stocks := make([]models.Stock, size)
 	for i := 0; i < size; i++ {
-		stock := GetRandomStock()
+		stock := GetRandomStock(country)
 		stocks[i] = stock
 	}
 	return stocks
