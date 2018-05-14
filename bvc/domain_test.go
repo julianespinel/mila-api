@@ -5,10 +5,11 @@ import (
 	"time"
 
 	"github.com/golang/mock/gomock"
+	"github.com/julianespinel/mila-api/models"
 	"github.com/stretchr/testify/assert"
 )
 
-func initializeBVCDomain(t *testing.T) (Domain, *MockClientInterface,
+func initializeBVCDomain(t *testing.T) (DomainMila, *MockClientInterface,
 	*MockPersistenceInterface) {
 	mockController := gomock.NewController(t)
 	defer mockController.Finish()
