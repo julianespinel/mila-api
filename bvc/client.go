@@ -14,9 +14,7 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-// TODO: rename to ClientMila
-// TODO: generate mock specifying package name
-type ClientInterface interface {
+type ClientMila interface {
 	getStocksClosingDataByDate(date time.Time) []models.Stock
 }
 
@@ -36,7 +34,7 @@ const (
  * See: https://blog.golang.org/errors-are-values
  */
 
-func InitClient(client *http.Client) ClientInterface {
+func InitClient(client *http.Client) ClientMila {
 	return Client{httpClient: client}
 }
 

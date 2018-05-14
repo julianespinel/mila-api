@@ -5,44 +5,43 @@
 package bvc
 
 import (
-	reflect "reflect"
-	time "time"
-
 	gomock "github.com/golang/mock/gomock"
 	models "github.com/julianespinel/mila-api/models"
+	reflect "reflect"
+	time "time"
 )
 
-// MockClientInterface is a mock of ClientInterface interface
-type MockClientInterface struct {
+// MockClientMila is a mock of ClientMila interface
+type MockClientMila struct {
 	ctrl     *gomock.Controller
-	recorder *MockClientInterfaceMockRecorder
+	recorder *MockClientMilaMockRecorder
 }
 
-// MockClientInterfaceMockRecorder is the mock recorder for MockClientInterface
-type MockClientInterfaceMockRecorder struct {
-	mock *MockClientInterface
+// MockClientMilaMockRecorder is the mock recorder for MockClientMila
+type MockClientMilaMockRecorder struct {
+	mock *MockClientMila
 }
 
-// NewMockClientInterface creates a new mock instance
-func NewMockClientInterface(ctrl *gomock.Controller) *MockClientInterface {
-	mock := &MockClientInterface{ctrl: ctrl}
-	mock.recorder = &MockClientInterfaceMockRecorder{mock}
+// NewMockClientMila creates a new mock instance
+func NewMockClientMila(ctrl *gomock.Controller) *MockClientMila {
+	mock := &MockClientMila{ctrl: ctrl}
+	mock.recorder = &MockClientMilaMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use
-func (m *MockClientInterface) EXPECT() *MockClientInterfaceMockRecorder {
+func (m *MockClientMila) EXPECT() *MockClientMilaMockRecorder {
 	return m.recorder
 }
 
 // getStocksClosingDataByDate mocks base method
-func (m *MockClientInterface) getStocksClosingDataByDate(date time.Time) []models.Stock {
+func (m *MockClientMila) getStocksClosingDataByDate(date time.Time) []models.Stock {
 	ret := m.ctrl.Call(m, "getStocksClosingDataByDate", date)
 	ret0, _ := ret[0].([]models.Stock)
 	return ret0
 }
 
 // getStocksClosingDataByDate indicates an expected call of getStocksClosingDataByDate
-func (mr *MockClientInterfaceMockRecorder) getStocksClosingDataByDate(date interface{}) *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "getStocksClosingDataByDate", reflect.TypeOf((*MockClientInterface)(nil).getStocksClosingDataByDate), date)
+func (mr *MockClientMilaMockRecorder) getStocksClosingDataByDate(date interface{}) *gomock.Call {
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "getStocksClosingDataByDate", reflect.TypeOf((*MockClientMila)(nil).getStocksClosingDataByDate), date)
 }
