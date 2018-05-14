@@ -5,20 +5,21 @@ import (
 	"github.com/julianespinel/mila-api/models"
 )
 
-type PersistenceInterface interface {
-	CountStocks() int
-	SaveStocks(stocks []models.Stock) error
+type MilaPersistence interface {
+	countStocks() int
+	saveStocks(stocks []models.Stock) error
+	getCurrentDayStocks(country string) []models.Stock
 }
 
 type Persistence struct {
 	db *gorm.DB
 }
 
-func InitPersistence(db *gorm.DB) PersistenceInterface {
+func InitPersistence(db *gorm.DB) MilaPersistence {
 	return Persistence{db: db}
 }
 
-func (persistence Persistence) SaveStocks(stocks []models.Stock) error {
+func (persistence Persistence) saveStocks(stocks []models.Stock) error {
 	persistence.db.CreateTable(&models.Stock{})
 	tx := persistence.db.Begin()
 	for _, stock := range stocks {
@@ -32,8 +33,14 @@ func (persistence Persistence) SaveStocks(stocks []models.Stock) error {
 	return nil
 }
 
-func (persistence Persistence) CountStocks() int {
+func (persistence Persistence) countStocks() int {
 	count := 0
 	persistence.db.Model(&models.Stock{}).Count(&count)
 	return count
+}
+
+func (persistence Persistence) getCurrentDayStocks(country string) []models.Stock {
+	var stocks []models.Stock
+	persistence.db.Where(&models.Stock{Country: country}).Find(&stocks)
+	return stocks
 }

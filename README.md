@@ -8,4 +8,4 @@ Status: [![CircleCI](https://circleci.com/gh/julianespinel/mila-api.svg?style=sv
 
 Run the tests: `go test ./...`
 
-Create new mocks: `mockgen -source=file_name.go -destination=mock_file_name.go`
+Create new mocks: `mockgen -source=file_name.go -destination=mock_file_name.go -package=destination_package_name`

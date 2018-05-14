@@ -26,15 +26,16 @@ func getVCRRecorder(cassetteName string) *recorder.Recorder {
 	return rec
 }
 
-func Test_BVCClient_GetStocksClosingDataByDate_success(t *testing.T) {
-	cassetteName := "fixtures/Test_BVCClient_GetStocksClosingDataByDate_success"
+func Test_BVCClient_getStocksClosingDataByDate_success(t *testing.T) {
+	cassetteName := "fixtures/Test_BVCClient_getStocksClosingDataByDate_success"
 	rec := getVCRRecorder(cassetteName)
 	defer rec.Stop()
 	httpClient := &http.Client{Transport: rec}
 	bvcClient := InitClient(httpClient)
 	date := time.Date(2018, time.April, 30, 0, 0, 0, 0, time.UTC)
 
-	stocks := bvcClient.GetStocksClosingDataByDate(date)
+	stocks, err := bvcClient.getStocksClosingDataByDate(date)
+	assert.Nil(t, err)
 	assert.NotNil(t, stocks)
 	assert.NotZero(t, len(stocks))
 }

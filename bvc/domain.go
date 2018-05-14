@@ -1,13 +1,22 @@
 package bvc
 
-import "time"
+import (
+	"time"
 
-type Domain struct {
-	client      ClientInterface
-	persistence PersistenceInterface
+	"github.com/julianespinel/mila-api/models"
+)
+
+type MilaDomain interface {
+	updateDailyStocks(date time.Time) error
+	getCurrentDayStocks(country string) []models.Stock
 }
 
-func InitDomain(client ClientInterface, persistence PersistenceInterface) Domain {
+type Domain struct {
+	client      MilaClient
+	persistence MilaPersistence
+}
+
+func InitDomain(client MilaClient, persistence MilaPersistence) MilaDomain {
 	domain := Domain{
 		client:      client,
 		persistence: persistence,
@@ -15,7 +24,14 @@ func InitDomain(client ClientInterface, persistence PersistenceInterface) Domain
 	return domain
 }
 
-func (domain Domain) UpdateDailyStocks(date time.Time) error {
-	stocks := domain.client.GetStocksClosingDataByDate(date)
-	return domain.persistence.SaveStocks(stocks)
+func (domain Domain) updateDailyStocks(date time.Time) error {
+	stocks, err := domain.client.getStocksClosingDataByDate(date)
+	if err != nil {
+		return err
+	}
+	return domain.persistence.saveStocks(stocks)
+}
+
+func (domain Domain) getCurrentDayStocks(country string) []models.Stock {
+	return domain.persistence.getCurrentDayStocks(country)
 }

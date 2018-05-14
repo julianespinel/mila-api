@@ -2,20 +2,22 @@ package models
 
 import (
 	"time"
-	"github.com/shopspring/decimal"
+
 	"github.com/jinzhu/gorm"
+	"github.com/shopspring/decimal"
 )
 
 type Stock struct {
-	gorm.Model
-	Date time.Time
-	Symbol string `gorm:"PRIMARY_KEY"`
-	Name string
-	Currency string
-	Open decimal.Decimal `sql:"type:decimal(20,8);"`
-	High decimal.Decimal `sql:"type:decimal(20,8);"`
-	Low decimal.Decimal `sql:"type:decimal(20,8);"`
-	Close decimal.Decimal `sql:"type:decimal(20,8);"`
-	AdjClose decimal.Decimal `sql:"type:decimal(20,8);"`
-	Volume int64
+	gorm.Model `json:"-"`      // Ignore gorm fields: ID, CreatedAt, UpdatedAt.
+	Date       time.Time       `json:"date"`
+	Country    string          `json:"country"`
+	Symbol     string          `gorm:"PRIMARY_KEY" json:"symbol"`
+	Name       string          `json:"name"`
+	Currency   string          `json:"currency"`
+	Open       decimal.Decimal `sql:"type:decimal(20,8);" json:"open"`
+	High       decimal.Decimal `sql:"type:decimal(20,8);" json:"high"`
+	Low        decimal.Decimal `sql:"type:decimal(20,8);" json:"low"`
+	Close      decimal.Decimal `sql:"type:decimal(20,8);" json:"close"`
+	AdjClose   decimal.Decimal `sql:"type:decimal(20,8);" json:"adjClose"`
+	Volume     int64           `json:"volume"`
 }
