@@ -11,37 +11,37 @@ import (
 	time "time"
 )
 
-// MockClientMila is a mock of ClientMila interface
-type MockClientMila struct {
+// MockMilaClient is a mock of MilaClient interface
+type MockMilaClient struct {
 	ctrl     *gomock.Controller
-	recorder *MockClientMilaMockRecorder
+	recorder *MockMilaClientMockRecorder
 }
 
-// MockClientMilaMockRecorder is the mock recorder for MockClientMila
-type MockClientMilaMockRecorder struct {
-	mock *MockClientMila
+// MockMilaClientMockRecorder is the mock recorder for MockMilaClient
+type MockMilaClientMockRecorder struct {
+	mock *MockMilaClient
 }
 
-// NewMockClientMila creates a new mock instance
-func NewMockClientMila(ctrl *gomock.Controller) *MockClientMila {
-	mock := &MockClientMila{ctrl: ctrl}
-	mock.recorder = &MockClientMilaMockRecorder{mock}
+// NewMockMilaClient creates a new mock instance
+func NewMockMilaClient(ctrl *gomock.Controller) *MockMilaClient {
+	mock := &MockMilaClient{ctrl: ctrl}
+	mock.recorder = &MockMilaClientMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use
-func (m *MockClientMila) EXPECT() *MockClientMilaMockRecorder {
+func (m *MockMilaClient) EXPECT() *MockMilaClientMockRecorder {
 	return m.recorder
 }
 
 // getStocksClosingDataByDate mocks base method
-func (m *MockClientMila) getStocksClosingDataByDate(date time.Time) []models.Stock {
+func (m *MockMilaClient) getStocksClosingDataByDate(date time.Time) []models.Stock {
 	ret := m.ctrl.Call(m, "getStocksClosingDataByDate", date)
 	ret0, _ := ret[0].([]models.Stock)
 	return ret0
 }
 
 // getStocksClosingDataByDate indicates an expected call of getStocksClosingDataByDate
-func (mr *MockClientMilaMockRecorder) getStocksClosingDataByDate(date interface{}) *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "getStocksClosingDataByDate", reflect.TypeOf((*MockClientMila)(nil).getStocksClosingDataByDate), date)
+func (mr *MockMilaClientMockRecorder) getStocksClosingDataByDate(date interface{}) *gomock.Call {
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "getStocksClosingDataByDate", reflect.TypeOf((*MockMilaClient)(nil).getStocksClosingDataByDate), date)
 }

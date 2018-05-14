@@ -10,61 +10,61 @@ import (
 	reflect "reflect"
 )
 
-// MockPersistenceMila is a mock of PersistenceMila interface
-type MockPersistenceMila struct {
+// MockMilaPersistence is a mock of MilaPersistence interface
+type MockMilaPersistence struct {
 	ctrl     *gomock.Controller
-	recorder *MockPersistenceMilaMockRecorder
+	recorder *MockMilaPersistenceMockRecorder
 }
 
-// MockPersistenceMilaMockRecorder is the mock recorder for MockPersistenceMila
-type MockPersistenceMilaMockRecorder struct {
-	mock *MockPersistenceMila
+// MockMilaPersistenceMockRecorder is the mock recorder for MockMilaPersistence
+type MockMilaPersistenceMockRecorder struct {
+	mock *MockMilaPersistence
 }
 
-// NewMockPersistenceMila creates a new mock instance
-func NewMockPersistenceMila(ctrl *gomock.Controller) *MockPersistenceMila {
-	mock := &MockPersistenceMila{ctrl: ctrl}
-	mock.recorder = &MockPersistenceMilaMockRecorder{mock}
+// NewMockMilaPersistence creates a new mock instance
+func NewMockMilaPersistence(ctrl *gomock.Controller) *MockMilaPersistence {
+	mock := &MockMilaPersistence{ctrl: ctrl}
+	mock.recorder = &MockMilaPersistenceMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use
-func (m *MockPersistenceMila) EXPECT() *MockPersistenceMilaMockRecorder {
+func (m *MockMilaPersistence) EXPECT() *MockMilaPersistenceMockRecorder {
 	return m.recorder
 }
 
 // countStocks mocks base method
-func (m *MockPersistenceMila) countStocks() int {
+func (m *MockMilaPersistence) countStocks() int {
 	ret := m.ctrl.Call(m, "countStocks")
 	ret0, _ := ret[0].(int)
 	return ret0
 }
 
 // countStocks indicates an expected call of countStocks
-func (mr *MockPersistenceMilaMockRecorder) countStocks() *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "countStocks", reflect.TypeOf((*MockPersistenceMila)(nil).countStocks))
+func (mr *MockMilaPersistenceMockRecorder) countStocks() *gomock.Call {
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "countStocks", reflect.TypeOf((*MockMilaPersistence)(nil).countStocks))
 }
 
 // saveStocks mocks base method
-func (m *MockPersistenceMila) saveStocks(stocks []models.Stock) error {
+func (m *MockMilaPersistence) saveStocks(stocks []models.Stock) error {
 	ret := m.ctrl.Call(m, "saveStocks", stocks)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // saveStocks indicates an expected call of saveStocks
-func (mr *MockPersistenceMilaMockRecorder) saveStocks(stocks interface{}) *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "saveStocks", reflect.TypeOf((*MockPersistenceMila)(nil).saveStocks), stocks)
+func (mr *MockMilaPersistenceMockRecorder) saveStocks(stocks interface{}) *gomock.Call {
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "saveStocks", reflect.TypeOf((*MockMilaPersistence)(nil).saveStocks), stocks)
 }
 
 // getCurrentDayStocks mocks base method
-func (m *MockPersistenceMila) getCurrentDayStocks(country string) []models.Stock {
+func (m *MockMilaPersistence) getCurrentDayStocks(country string) []models.Stock {
 	ret := m.ctrl.Call(m, "getCurrentDayStocks", country)
 	ret0, _ := ret[0].([]models.Stock)
 	return ret0
 }
 
 // getCurrentDayStocks indicates an expected call of getCurrentDayStocks
-func (mr *MockPersistenceMilaMockRecorder) getCurrentDayStocks(country interface{}) *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "getCurrentDayStocks", reflect.TypeOf((*MockPersistenceMila)(nil).getCurrentDayStocks), country)
+func (mr *MockMilaPersistenceMockRecorder) getCurrentDayStocks(country interface{}) *gomock.Call {
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "getCurrentDayStocks", reflect.TypeOf((*MockMilaPersistence)(nil).getCurrentDayStocks), country)
 }

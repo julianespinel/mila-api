@@ -11,10 +11,10 @@ import (
 )
 
 type API struct {
-	domain DomainMila
+	domain MilaDomain
 }
 
-func InitAPI(domain DomainMila) API {
+func InitAPI(domain MilaDomain) API {
 	return API{domain: domain}
 }
 

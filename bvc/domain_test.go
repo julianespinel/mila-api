@@ -9,12 +9,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func initializeBVCDomain(t *testing.T) (DomainMila, *MockClientMila,
-	*MockPersistenceMila) {
+func initializeBVCDomain(t *testing.T) (MilaDomain, *MockMilaClient,
+	*MockMilaPersistence) {
 	mockController := gomock.NewController(t)
 	defer mockController.Finish()
-	clientMock := NewMockClientMila(mockController)
-	persistenceMock := NewMockPersistenceMila(mockController)
+	clientMock := NewMockMilaClient(mockController)
+	persistenceMock := NewMockMilaPersistence(mockController)
 	domain := InitDomain(clientMock, persistenceMock)
 	return domain, clientMock, persistenceMock
 }

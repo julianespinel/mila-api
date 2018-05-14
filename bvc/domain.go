@@ -6,17 +6,17 @@ import (
 	"github.com/julianespinel/mila-api/models"
 )
 
-type DomainMila interface {
+type MilaDomain interface {
 	updateDailyStocks(date time.Time) error
 	getCurrentDayStocks(country string) []models.Stock
 }
 
 type Domain struct {
-	client      ClientMila
-	persistence PersistenceMila
+	client      MilaClient
+	persistence MilaPersistence
 }
 
-func InitDomain(client ClientMila, persistence PersistenceMila) DomainMila {
+func InitDomain(client MilaClient, persistence MilaPersistence) MilaDomain {
 	domain := Domain{
 		client:      client,
 		persistence: persistence,

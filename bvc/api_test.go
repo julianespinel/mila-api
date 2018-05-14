@@ -12,10 +12,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func initializeBVCDomainMock(t *testing.T) *MockDomainMila {
+func initializeBVCDomainMock(t *testing.T) *MockMilaDomain {
 	mockController := gomock.NewController(t)
 	defer mockController.Finish()
-	return NewMockDomainMila(mockController)
+	return NewMockMilaDomain(mockController)
 }
 
 func newIrisTestApp(api API) *iris.Application {

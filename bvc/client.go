@@ -14,7 +14,7 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-type ClientMila interface {
+type MilaClient interface {
 	getStocksClosingDataByDate(date time.Time) []models.Stock
 }
 
@@ -34,7 +34,7 @@ const (
  * See: https://blog.golang.org/errors-are-values
  */
 
-func InitClient(client *http.Client) ClientMila {
+func InitClient(client *http.Client) MilaClient {
 	return Client{httpClient: client}
 }
 

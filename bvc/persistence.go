@@ -5,7 +5,7 @@ import (
 	"github.com/julianespinel/mila-api/models"
 )
 
-type PersistenceMila interface {
+type MilaPersistence interface {
 	countStocks() int
 	saveStocks(stocks []models.Stock) error
 	getCurrentDayStocks(country string) []models.Stock
@@ -15,7 +15,7 @@ type Persistence struct {
 	db *gorm.DB
 }
 
-func InitPersistence(db *gorm.DB) PersistenceMila {
+func InitPersistence(db *gorm.DB) MilaPersistence {
 	return Persistence{db: db}
 }
 
