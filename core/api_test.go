@@ -1,7 +1,8 @@
-package bvc
+package core
 
 import (
 	"encoding/json"
+	"fmt"
 	"testing"
 	time "time"
 
@@ -41,6 +42,7 @@ func Test_BVCAPI_GetCurrentDayStocksByCountry_success(t *testing.T) {
 	var stocksResponse models.CurrentDayStocksResponse
 	json.Unmarshal([]byte(jsonString), &stocksResponse)
 	// Check strunct is correct
+	fmt.Println(jsonString)
 	assert.NotZero(t, stocksResponse.Date)
 	assert.Equal(t, stocksResponse.Country, models.Colombia)
 	assert.Len(t, stocksResponse.StocksData, size)
