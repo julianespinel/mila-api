@@ -1,7 +1,9 @@
-package files
+package bvc
 
 import (
+	"fmt"
 	"strconv"
+	"time"
 
 	"github.com/julianespinel/mila-api/models"
 	"github.com/julianespinel/xls"
@@ -9,6 +11,11 @@ import (
 )
 
 const cop = "cop"
+
+func getBVCTemporalFileName() string {
+	fileName := "bvc-stocks-%v.xls"
+	return fmt.Sprintf(fileName, time.Now().Unix())
+}
 
 func getStockFromRow(row *xls.Row) (models.Stock, error) {
 	stock := models.Stock{}
@@ -36,7 +43,7 @@ func getStockFromRow(row *xls.Row) (models.Stock, error) {
 	return stock, nil
 }
 
-func GetStocksFromBVCFile(filePath string) ([]models.Stock, error) {
+func getStocksFromBVCFile(filePath string) ([]models.Stock, error) {
 	stocks := make([]models.Stock, 0)
 	xlFile, err := xls.Open(filePath, "utf-8")
 	if err != nil {

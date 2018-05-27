@@ -1,8 +1,9 @@
-package bvc
+package core
 
 import (
 	"time"
 
+	"github.com/julianespinel/mila-api/bvc"
 	"github.com/julianespinel/mila-api/models"
 )
 
@@ -12,20 +13,20 @@ type MilaDomain interface {
 }
 
 type Domain struct {
-	client      MilaClient
+	bvcClient   bvc.MilaClient
 	persistence MilaPersistence
 }
 
-func InitDomain(client MilaClient, persistence MilaPersistence) MilaDomain {
+func InitDomain(client bvc.MilaClient, persistence MilaPersistence) MilaDomain {
 	domain := Domain{
-		client:      client,
+		bvcClient:   client,
 		persistence: persistence,
 	}
 	return domain
 }
 
 func (domain Domain) updateDailyStocks(date time.Time) error {
-	stocks, err := domain.client.getStocksClosingDataByDate(date)
+	stocks, err := domain.bvcClient.GetStocksClosingDataByDate(date)
 	if err != nil {
 		return err
 	}

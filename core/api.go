@@ -1,4 +1,4 @@
-package bvc
+package core
 
 import (
 	"log"

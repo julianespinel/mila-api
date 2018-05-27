@@ -12,7 +12,7 @@ import (
 )
 
 type MilaClient interface {
-	getStocksClosingDataByDate(date time.Time) ([]models.Stock, error)
+	GetStocksClosingDataByDate(date time.Time) ([]models.Stock, error)
 }
 
 type Client struct {
@@ -28,7 +28,7 @@ func InitClient(client *http.Client) MilaClient {
 	return Client{httpClient: client}
 }
 
-func (bvcClient Client) getStocksClosingDataByDate(date time.Time) ([]models.Stock, error) {
+func (bvcClient Client) GetStocksClosingDataByDate(date time.Time) ([]models.Stock, error) {
 	var stocks []models.Stock
 	url := fmt.Sprintf(
 		"https://www.bvc.com.co/mercados/DescargaXlsServlet?archivo=acciones&fecha=%s&resultados=%v&tipoMercado=%v",
@@ -42,11 +42,11 @@ func (bvcClient Client) getStocksClosingDataByDate(date time.Time) ([]models.Sto
 		return stocks, err
 	}
 	defer res.Body.Close()
-	filePath := files.GetBVCTemporalFileName()
+	filePath := getBVCTemporalFileName()
 	if err = files.SaveBodyToFile(filePath, res.Body); err != nil {
 		return stocks, err
 	}
-	if stocks, err = files.GetStocksFromBVCFile(filePath); err != nil {
+	if stocks, err = getStocksFromBVCFile(filePath); err != nil {
 		return stocks, err
 	}
 	os.Remove(filePath)
