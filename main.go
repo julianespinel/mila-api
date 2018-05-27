@@ -11,17 +11,22 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/julianespinel/mila-api/bvc"
 	"github.com/kataras/iris"
+	"github.com/julianespinel/mila-api/core"
 )
 
-func initializeBVC(db *gorm.DB) bvc.API {
+func initializeBVCClient() bvc.MilaClient {
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
 	httpClient := &http.Client{Transport: tr}
-	client := bvc.InitClient(httpClient)
-	persistence := bvc.InitPersistence(db)
-	domain := bvc.InitDomain(client, persistence)
-	api := bvc.InitAPI(domain)
+	return bvc.InitClient(httpClient)
+}
+
+func initializeCore(db *gorm.DB) core.API {
+	bvcClient := initializeBVCClient()
+	persistence := core.InitPersistence(db)
+	domain := core.InitDomain(bvcClient, persistence)
+	api := core.InitAPI(domain)
 	return api
 }
 
@@ -46,8 +51,8 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	bvcAPI := initializeBVC(db)
-	gocron.Every(1).Day().At("23:00").Do(bvcAPI.UpdateDailyStocks, time.Now())
+	milaAPI := initializeCore(db)
+	gocron.Every(1).Day().At("23:00").Do(milaAPI.UpdateDailyStocks, time.Now())
 
 	// Start all the pending jobs
 	<-gocron.Start()
@@ -56,7 +61,7 @@ func main() {
 	irisApp := initializeIrisApp()
 	// Define Iris routes
 	milaAPIRoutes := irisApp.Party("/mila/api", logURLAndIP)
-	milaAPIRoutes = bvcAPI.AddRoutes(milaAPIRoutes)
+	milaAPIRoutes = milaAPI.AddRoutes(milaAPIRoutes)
 
 	// Listen for incoming HTTP/1.x & HTTP/2 clients on localhost port 8080.
 	// TODO: get port from config file.
