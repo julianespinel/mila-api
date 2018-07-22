@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"time"
 
 	"github.com/BurntSushi/toml"
 	"github.com/jinzhu/gorm"
@@ -87,7 +86,7 @@ func main() {
 
 	updateCron := cron.New()
 	updateCron.AddFunc("0 0 23 * * *", func() {
-		milaAPI.UpdateDailyStocks(time.Now())
+		milaAPI.UpdateDailyStocks()
 	})
 	updateCron.Start()
 
