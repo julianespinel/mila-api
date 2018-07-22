@@ -136,12 +136,6 @@
   revision = "ebe99fcebbcedf6e7916320cce24c3e1832766ac"
 
 [[projects]]
-  branch = "master"
-  name = "github.com/jasonlvhit/gocron"
-  packages = ["."]
-  revision = "54194c9749d48b073c9aeb2c787b6882e95dd0cd"
-
-[[projects]]
   name = "github.com/jinzhu/gorm"
   packages = [
     ".",
@@ -300,6 +294,12 @@
   version = "v1.0.0"
 
 [[projects]]
+  name = "github.com/robfig/cron"
+  packages = ["."]
+  revision = "b41be1df696709bb6395fe435af20370037c0b4c"
+  version = "v1.1"
+
+[[projects]]
   branch = "master"
   name = "github.com/ryanuber/columnize"
   packages = ["."]
@@ -449,6 +449,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "4b18e5661a62ab533e9fdf50cc273c5a455e1c40913e8b23c829f8bff8f4740c"
+  inputs-digest = "4554afc29880c10291788f3fa01124425120893f3c91ce25661aef546a020b92"
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -8,10 +8,10 @@ import (
 )
 
 type Stock struct {
-	gorm.Model `json:"-"`      // Ignore gorm fields: ID, CreatedAt, UpdatedAt.
+	gorm.Model `json:"-"`      // Ignore gorm fields: ID, CreatedAt, UpdatedAt and DeletedAt when serializing to JSON
 	Date       time.Time       `json:"date"`
 	Country    string          `json:"country"`
-	Symbol     string          `gorm:"PRIMARY_KEY" json:"symbol"`
+	Symbol     string          `gorm:"not null;unique" json:"symbol"`
 	Name       string          `json:"name"`
 	Currency   string          `json:"currency"`
 	Open       decimal.Decimal `sql:"type:decimal(20,8);" json:"open"`

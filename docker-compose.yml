@@ -17,5 +17,6 @@ services:
     build: .
     ports:
       - "3000:3000"
-    links:
+    depends_on:
       - db
+    command: ["./scripts/wait-for-it.sh", "db:3306", "--", "./goapp", "-config=config/development.toml"]

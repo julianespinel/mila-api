@@ -68,3 +68,13 @@ func (m *MockMilaPersistence) getCurrentDayStocks(country string) []models.Stock
 func (mr *MockMilaPersistenceMockRecorder) getCurrentDayStocks(country interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "getCurrentDayStocks", reflect.TypeOf((*MockMilaPersistence)(nil).getCurrentDayStocks), country)
 }
+
+// removeOldStocksData mocks base method
+func (m *MockMilaPersistence) removeOldStocksData() {
+	m.ctrl.Call(m, "removeOldStocksData")
+}
+
+// removeOldStocksData indicates an expected call of removeOldStocksData
+func (mr *MockMilaPersistenceMockRecorder) removeOldStocksData() *gomock.Call {
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "removeOldStocksData", reflect.TypeOf((*MockMilaPersistence)(nil).removeOldStocksData))
+}

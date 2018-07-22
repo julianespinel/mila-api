@@ -26,7 +26,7 @@ func Test_BVCPersistence_saveStocks_success(t *testing.T) {
 	stocks := GetTestingStocks(size, models.Colombia)
 	assert.Equal(t, size, len(stocks))
 	// Exercise
-	bvcPersistence := Persistence{db: db}
+	bvcPersistence := InitPersistence(db)
 	err := bvcPersistence.saveStocks(stocks)
 	assert.Nil(t, err)
 	assert.Equal(t, size, bvcPersistence.countStocks())

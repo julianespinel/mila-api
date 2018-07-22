@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"testing"
-	time "time"
 
 	gomock "github.com/golang/mock/gomock"
 	"github.com/julianespinel/mila-api/models"
@@ -52,9 +51,8 @@ func Test_BVCAPI_updateDailyStocks_success(t *testing.T) {
 	domainMock := initializeBVCDomainMock(t)
 	api := InitAPI(domainMock)
 
-	date := time.Date(2018, time.April, 30, 0, 0, 0, 0, time.UTC)
-	domainMock.EXPECT().updateDailyStocks(date).Return(nil)
+	domainMock.EXPECT().updateDailyStocks(gomock.Any()).Return(nil)
 
-	err := api.UpdateDailyStocks(date)
+	err := api.UpdateDailyStocks()
 	assert.Nil(t, err)
 }

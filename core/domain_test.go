@@ -5,9 +5,9 @@ import (
 	"time"
 
 	"github.com/golang/mock/gomock"
+	"github.com/julianespinel/mila-api/bvc"
 	"github.com/julianespinel/mila-api/models"
 	"github.com/stretchr/testify/assert"
-	"github.com/julianespinel/mila-api/bvc"
 )
 
 func initializeBVCDomain(t *testing.T) (MilaDomain, *bvc.MockMilaClient, *MockMilaPersistence) {
@@ -27,6 +27,7 @@ func Test_BVCDomain_updateDailyStocks_success(t *testing.T) {
 	date := time.Date(2018, time.April, 30, 0, 0, 0, 0, time.UTC)
 
 	clientMock.EXPECT().GetStocksClosingDataByDate(date).Return(stocks, nil)
+	persistenceMock.EXPECT().removeOldStocksData()
 	persistenceMock.EXPECT().saveStocks(stocks).Return(nil)
 
 	err := domain.updateDailyStocks(date)

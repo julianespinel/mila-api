@@ -30,6 +30,7 @@ func (domain Domain) updateDailyStocks(date time.Time) error {
 	if err != nil {
 		return err
 	}
+	domain.persistence.removeOldStocksData()
 	return domain.persistence.saveStocks(stocks)
 }
 

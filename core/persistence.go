@@ -9,6 +9,7 @@ type MilaPersistence interface {
 	countStocks() int
 	saveStocks(stocks []models.Stock) error
 	getCurrentDayStocks(country string) []models.Stock
+	removeOldStocksData()
 }
 
 type Persistence struct {
@@ -16,11 +17,12 @@ type Persistence struct {
 }
 
 func InitPersistence(db *gorm.DB) MilaPersistence {
-	return Persistence{db: db}
+	persistence := Persistence{db: db}
+	persistence.db.CreateTable(&models.Stock{})
+	return persistence
 }
 
 func (persistence Persistence) saveStocks(stocks []models.Stock) error {
-	persistence.db.CreateTable(&models.Stock{})
 	tx := persistence.db.Begin()
 	for _, stock := range stocks {
 		err := tx.Create(&stock).Error
@@ -43,4 +45,8 @@ func (persistence Persistence) getCurrentDayStocks(country string) []models.Stoc
 	var stocks []models.Stock
 	persistence.db.Where(&models.Stock{Country: country}).Find(&stocks)
 	return stocks
+}
+
+func (persistence Persistence) removeOldStocksData() {
+	persistence.db.Unscoped().Delete(&models.Stock{})
 }

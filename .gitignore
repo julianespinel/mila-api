@@ -18,3 +18,5 @@
 
 # Ignore binaries
 mila-api
+cover.out
+cover.html

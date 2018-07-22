@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/extrame/xls"
 	"github.com/julianespinel/mila-api/models"
-	"github.com/julianespinel/xls"
 	"github.com/shopspring/decimal"
 )
 
@@ -29,6 +29,7 @@ func getStockFromRow(row *xls.Row) (models.Stock, error) {
 			stock.Volume = volume
 		}
 		if j == 2 {
+			stock.Symbol = cell
 			stock.Name = cell
 		}
 		if j == 4 {
@@ -43,7 +44,7 @@ func getStockFromRow(row *xls.Row) (models.Stock, error) {
 	return stock, nil
 }
 
-func getStocksFromBVCFile(filePath string) ([]models.Stock, error) {
+func getStocksFromBVCFile(filePath string, date time.Time) ([]models.Stock, error) {
 	stocks := make([]models.Stock, 0)
 	xlFile, err := xls.Open(filePath, "utf-8")
 	if err != nil {
@@ -57,6 +58,8 @@ func getStocksFromBVCFile(filePath string) ([]models.Stock, error) {
 			if err != nil {
 				break
 			}
+			stock.Date = date
+			stock.Country = models.Colombia
 			stocks = append(stocks, stock)
 		}
 	}

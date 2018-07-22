@@ -1,0 +1,12 @@
+[web]
+port = 3000
+charset = "UTF-8"
+
+[database]
+dialect = "mysql"
+username = "usertest"
+password = "passwordtest"
+host = "db"
+port = 3306
+db_name = "miladb"
+charset = "utf8"
