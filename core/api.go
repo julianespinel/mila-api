@@ -51,8 +51,7 @@ func getLatestBusinessDay() time.Time {
 	case "Saturday":
 		return now.AddDate(0, 0, -1)
 	case "Sunday":
-		// return now.AddDate(0, 0, -2)
-		return now.AddDate(0, 0, -3) // To get thursday, delete this line
+		return now.AddDate(0, 0, -2)
 	default:
 		return now
 	}
