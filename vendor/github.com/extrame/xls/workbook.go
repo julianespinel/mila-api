@@ -15,7 +15,7 @@ type WorkBook struct {
 	Codepage uint16
 	Xfs      []st_xf_data
 	Fonts    []Font
-	Formats  map[uint16]*Format
+	Formats  map[uint16]*format
 	//All the sheets from the workbook
 	sheets         []*WorkSheet
 	Author         string
@@ -30,7 +30,7 @@ type WorkBook struct {
 //read workbook from ole2 file
 func newWorkBookFromOle2(rs io.ReadSeeker) *WorkBook {
 	wb := new(WorkBook)
-	wb.Formats = make(map[uint16]*Format)
+	wb.Formats = make(map[uint16]*format)
 	// wb.bts = bts
 	wb.rs = rs
 	wb.sheets = make([]*WorkSheet, 0)
@@ -61,11 +61,11 @@ func (w *WorkBook) addFont(font *FontInfo, buf io.ReadSeeker) {
 	w.Fonts = append(w.Fonts, Font{Info: font, Name: name})
 }
 
-func (w *WorkBook) addFormat(format *Format) {
+func (w *WorkBook) addFormat(fmt *format) {
 	if w.Formats == nil {
 		os.Exit(1)
 	}
-	w.Formats[format.Head.Index] = format
+	w.Formats[fmt.Head.Index] = fmt
 }
 
 func (wb *WorkBook) parseBof(buf io.ReadSeeker, b *bof, pre *bof, offset_pre int) (after *bof, after_using *bof, offset int) {
@@ -101,6 +101,10 @@ func (wb *WorkBook) parseBof(buf io.ReadSeeker, b *bof, pre *bof, offset_pre int
 					wb.sst[offset_pre] = wb.sst[offset_pre] + str
 				}
 
+				if err == io.EOF {
+					break
+				}
+
 				offset_pre++
 				err = binary.Read(buf_item, binary.LittleEndian, &size)
 			}
@@ -115,14 +119,15 @@ func (wb *WorkBook) parseBof(buf io.ReadSeeker, b *bof, pre *bof, offset_pre int
 		var size uint16
 		var i = 0
 		for ; i < int(info.Count); i++ {
-			if err := binary.Read(buf_item, binary.LittleEndian, &size); err == nil {
+			var err error
+			if err = binary.Read(buf_item, binary.LittleEndian, &size); err == nil {
 				var str string
 				str, err = wb.get_string(buf_item, size)
 				wb.sst[i] = wb.sst[i] + str
+			}
 
-				if err == io.EOF {
-					break
-				}
+			if err == io.EOF {
+				break
 			}
 		}
 		offset = i
@@ -146,7 +151,7 @@ func (wb *WorkBook) parseBof(buf io.ReadSeeker, b *bof, pre *bof, offset_pre int
 		binary.Read(buf_item, binary.LittleEndian, f)
 		wb.addFont(f, buf_item)
 	case 0x41E: //FORMAT
-		font := new(Format)
+		font := new(format)
 		binary.Read(buf_item, binary.LittleEndian, &font.Head)
 		font.str, _ = wb.get_string(buf_item, font.Head.Size)
 		wb.addFormat(font)
@@ -198,7 +203,7 @@ func (w *WorkBook) get_string(buf io.ReadSeeker, size uint16) (res string, err e
 				err = io.EOF
 			}
 
-			var bts1 = make([]uint16, size)
+			var bts1 = make([]uint16, n)
 			for k, v := range bts[:n] {
 				bts1[k] = uint16(v)
 			}
