@@ -60,6 +60,9 @@ func main() {
 	// Initialize Iris app
 	irisApp := initializeIrisApp()
 	// Define Iris routes
+	milaAdminRoutes := irisApp.Party("/mila/admin", logURLAndIP)
+	milaAdminRoutes = admin.AddRoutes(milaAdminRoutes)
+
 	milaAPIRoutes := irisApp.Party("/mila/api", logURLAndIP)
 	milaAPIRoutes = milaAPI.AddRoutes(milaAPIRoutes)
 
