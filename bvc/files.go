@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/extrame/xls"
 	"github.com/julianespinel/mila-api/models"
-	"github.com/julianespinel/xls"
 	"github.com/shopspring/decimal"
 )
 
