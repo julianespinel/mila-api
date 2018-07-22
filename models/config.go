@@ -16,6 +16,6 @@ type DatabaseConfig struct {
 	Password string
 	Host     string
 	Port     int
-	DbName   string
+	DBName   string `toml:"db_name"`
 	Charset  string
 }
