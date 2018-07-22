@@ -84,12 +84,13 @@ func main() {
 
 	db := initializeDBConnection(config.Database)
 	milaAPI := initializeCore(db)
-	gocron.Every(1).Day().At("23:00").Do(milaAPI.UpdateDailyStocks, time.Now())
 
-	// Start all the pending jobs
-	<-gocron.Start()
+	updateCron := cron.New()
+	updateCron.AddFunc("0 0 23 * * *", func() {
+		milaAPI.UpdateDailyStocks(time.Now())
+	})
+	updateCron.Start()
 
-	// Initialize Iris app
 	irisApp := initializeIrisApp()
 	// Define Iris routes
 	milaAdminRoutes := irisApp.Party("/mila/admin", logURLAndIP)
