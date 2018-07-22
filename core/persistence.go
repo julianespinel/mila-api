@@ -9,6 +9,7 @@ type MilaPersistence interface {
 	countStocks() int
 	saveStocks(stocks []models.Stock) error
 	getCurrentDayStocks(country string) []models.Stock
+	removeOldStocksData()
 }
 
 type Persistence struct {
@@ -43,4 +44,8 @@ func (persistence Persistence) getCurrentDayStocks(country string) []models.Stoc
 	var stocks []models.Stock
 	persistence.db.Where(&models.Stock{Country: country}).Find(&stocks)
 	return stocks
+}
+
+func (persistence Persistence) removeOldStocksData() {
+	persistence.db.Unscoped().Delete(&models.Stock{})
 }
