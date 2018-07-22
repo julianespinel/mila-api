@@ -55,7 +55,7 @@ func initializeDBConnection(dbConfig models.DatabaseConfig) *gorm.DB {
 		dbConfig.Password,
 		dbConfig.Host,
 		dbConfig.Port,
-		dbConfig.DbName,
+		dbConfig.DBName,
 		dbConfig.Charset,
 	)
 	db, err := gorm.Open(dbConfig.Dialect, dbURL)
