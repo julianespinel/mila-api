@@ -2,16 +2,21 @@ package main
 
 import (
 	"crypto/tls"
+	"flag"
+	"fmt"
 	"log"
 	"net/http"
 	"time"
 
-	"github.com/jasonlvhit/gocron"
+	"github.com/BurntSushi/toml"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"github.com/julianespinel/mila-api/admin"
 	"github.com/julianespinel/mila-api/bvc"
-	"github.com/kataras/iris"
 	"github.com/julianespinel/mila-api/core"
+	"github.com/julianespinel/mila-api/models"
+	"github.com/kataras/iris"
+	"github.com/robfig/cron"
 )
 
 func initializeBVCClient() bvc.MilaClient {
@@ -44,13 +49,40 @@ func initializeIrisApp() *iris.Application {
 	return app
 }
 
-func main() {
-	time.Sleep(15 * time.Second)
-	// TODO: get real values from a config file.
-	db, err := gorm.Open("mysql", "usertest:passwordtest@tcp(db:3306)/miladb?charset=utf8&parseTime=True")
+func initializeDBConnection(dbConfig models.DatabaseConfig) *gorm.DB {
+	dbURL := fmt.Sprintf(
+		"%s:%s@tcp(%s:%d)/%s?charset=%s&parseTime=True",
+		dbConfig.Username,
+		dbConfig.Password,
+		dbConfig.Host,
+		dbConfig.Port,
+		dbConfig.DbName,
+		dbConfig.Charset,
+	)
+	db, err := gorm.Open(dbConfig.Dialect, dbURL)
 	if err != nil {
 		log.Fatal(err)
 	}
+	return db
+}
+
+func readConfigFromFile(configFilePath string) models.Config {
+	var config models.Config
+	if _, err := toml.DecodeFile(configFilePath, &config); err != nil {
+		log.Fatal(err)
+	}
+	return config
+}
+
+func main() {
+	configFilePath := flag.String(
+		"config",                               // flag name
+		"config/development.toml",              // default value
+		"File path of the configuration file.", // usage
+	)
+	config := readConfigFromFile(*configFilePath)
+
+	db := initializeDBConnection(config.Database)
 	milaAPI := initializeCore(db)
 	gocron.Every(1).Day().At("23:00").Do(milaAPI.UpdateDailyStocks, time.Now())
 
@@ -66,7 +98,11 @@ func main() {
 	milaAPIRoutes := irisApp.Party("/mila/api", logURLAndIP)
 	milaAPIRoutes = milaAPI.AddRoutes(milaAPIRoutes)
 
-	// Listen for incoming HTTP/1.x & HTTP/2 clients on localhost port 8080.
-	// TODO: get port from config file.
-	irisApp.Run(iris.Addr(":8080"), iris.WithCharset("UTF-8"), iris.WithoutVersionChecker)
+	// Listen for incoming HTTP/1.x & HTTP/2 clients.
+	irisAddress := fmt.Sprintf(":%d", config.Web.Port)
+	irisApp.Run(
+		iris.Addr(irisAddress),
+		iris.WithCharset(config.Web.Charset),
+		iris.WithoutVersionChecker,
+	)
 }
