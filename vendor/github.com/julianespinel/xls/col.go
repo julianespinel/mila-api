@@ -4,10 +4,7 @@ import (
 	"fmt"
 	"math"
 	"strconv"
-
 	"time"
-
-	internalFmt "github.com/extrame/xls/format"
 )
 
 //content type
@@ -52,22 +49,23 @@ func (xf *XfRk) String(wb *WorkBook) string {
 	if len(wb.Xfs) > idx {
 		fNo := wb.Xfs[idx].formatNo()
 		if fNo >= 164 { // user defined format
-			if formatter := wb.Formats[fNo]; formatter != nil {
+			if fmt := wb.Formats[fNo]; fmt != nil {
 				i, f, isFloat := xf.Rk.number()
 				if !isFloat {
 					f = float64(i)
 				}
-				// t := timeFromExcelTime(f, wb.dateMode == 1)
-				return formatter.Format(f, wb.dateMode == 1)
+				t := timeFromExcelTime(f, wb.dateMode == 1)
+
+				return t.Format(time.RFC3339) //TODO it should be international and format as the describled style
 			}
-			// see http://www.openoffice.org/sc/excelfileformat.pdf Page #174
+			// see http://www.openoffice.org/sc/excelfileformat.pdf
 		} else if 14 <= fNo && fNo <= 17 || fNo == 22 || 27 <= fNo && fNo <= 36 || 50 <= fNo && fNo <= 58 { // jp. date format
 			i, f, isFloat := xf.Rk.number()
 			if !isFloat {
 				f = float64(i)
 			}
-			t := internalFmt.TimeFromExcelTime(f, wb.dateMode == 1)
-			return t.Format(time.RFC3339) //TODO it should be international
+			t := timeFromExcelTime(f, wb.dateMode == 1)
+			return t.Format("2006.01") //TODO it should be international
 		}
 	}
 	return xf.Rk.String()
@@ -87,13 +85,6 @@ func (rk RK) number() (intNum int64, floatNum float64, isFloat bool) {
 		}
 		return
 	}
-	//+++ add lines from here
-	if multiplied != 0 {
-		isFloat = true
-		floatNum = float64(val) / 100
-		return
-	}
-	//+++end
 	return int64(val), 0, false
 }
 
