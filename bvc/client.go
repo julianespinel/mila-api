@@ -46,7 +46,7 @@ func (bvcClient Client) GetStocksClosingDataByDate(date time.Time) ([]models.Sto
 	if err = files.SaveBodyToFile(filePath, res.Body); err != nil {
 		return stocks, err
 	}
-	if stocks, err = getStocksFromBVCFile(filePath); err != nil {
+	if stocks, err = getStocksFromBVCFile(filePath, date); err != nil {
 		return stocks, err
 	}
 	os.Remove(filePath)
