@@ -60,7 +60,7 @@ func getLatestBusinessDay() time.Time {
 func (api API) UpdateDailyStocks() error {
 	err := api.domain.updateDailyStocks(getLatestBusinessDay())
 	if err != nil {
-		log.Print(err)
+		log.Printf("Error: %s", err.Error())
 	}
 	return err
 }
